@@ -1,0 +1,9 @@
+2026-04-26 20:14:48,963 | INFO | AUTH SUCCESS — User: admin | Role: Admin
+2026-04-26 20:14:48,963 | WARNING | AUTH FAILED — Wrong password for user: dr.sharma
+2026-04-26 20:14:48,963 | WARNING | AUTH FAILED — Unknown user: hacker
+2026-04-26 20:14:48,986 | INFO | TOKEN VALID — User: admin | Role: Admin
+2026-04-26 20:14:48,987 | WARNING | TOKEN INVALID — Invalid header string: 'utf-8' codec can't decode byte 0x8a in position 0: invalid start byte
+2026-04-26 20:14:48,989 | INFO | AUTH SUCCESS — User: dr.sharma | Role: Doctor
+2026-04-26 20:14:48,989 | INFO | TOKEN VALID — User: admin | Role: Admin
+2026-04-26 20:14:48,990 | INFO | TOKEN VALID — User: dr.sharma | Role: Doctor
+2026-04-26 20:14:48,990 | WARNING | ACCESS DENIED — User: dr.sharma (Role: Doctor) tried to access Admin-only resource

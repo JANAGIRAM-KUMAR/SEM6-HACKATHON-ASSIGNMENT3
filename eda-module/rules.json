@@ -1,0 +1,90 @@
+{
+  "rules": [
+    {
+      "id": "R001",
+      "name": "Low Oxygen Alert",
+      "field": "spo2",
+      "operator": "<",
+      "value": 92,
+      "alert": "LOW_OXYGEN",
+      "severity": "HIGH",
+      "description": "SpO2 below 92% indicates hypoxemia"
+    },
+    {
+      "id": "R002",
+      "name": "High Heart Rate Alert",
+      "field": "heart_rate",
+      "operator": ">",
+      "value": 110,
+      "alert": "TACHYCARDIA",
+      "severity": "HIGH",
+      "description": "Heart rate above 110 bpm indicates tachycardia"
+    },
+    {
+      "id": "R003",
+      "name": "Low Heart Rate Alert",
+      "field": "heart_rate",
+      "operator": "<",
+      "value": 50,
+      "alert": "BRADYCARDIA",
+      "severity": "MEDIUM",
+      "description": "Heart rate below 50 bpm indicates bradycardia"
+    },
+    {
+      "id": "R004",
+      "name": "High Temperature Alert",
+      "field": "temperature",
+      "operator": ">=",
+      "value": 38.5,
+      "alert": "FEVER",
+      "severity": "MEDIUM",
+      "description": "Temperature >= 38.5°C indicates fever"
+    },
+    {
+      "id": "R005",
+      "name": "Low Temperature Alert",
+      "field": "temperature",
+      "operator": "<",
+      "value": 35.0,
+      "alert": "HYPOTHERMIA",
+      "severity": "HIGH",
+      "description": "Temperature below 35°C indicates hypothermia"
+    },
+    {
+      "id": "R006",
+      "name": "High Blood Pressure (Systolic)",
+      "field": "systolic_bp",
+      "operator": ">=",
+      "value": 140,
+      "alert": "HYPERTENSION",
+      "severity": "MEDIUM",
+      "description": "Systolic BP >= 140 mmHg indicates hypertension"
+    },
+    {
+      "id": "R007",
+      "name": "Critical Oxygen with Tachycardia",
+      "type": "compound",
+      "conditions": [
+        { "field": "spo2", "operator": "<", "value": 90 },
+        { "field": "heart_rate", "operator": ">", "value": 110 }
+      ],
+      "logic": "AND",
+      "alert": "CRITICAL_RESPIRATORY_DISTRESS",
+      "severity": "CRITICAL",
+      "description": "Low SpO2 combined with high heart rate — possible respiratory failure"
+    },
+    {
+      "id": "R008",
+      "name": "Fever with Tachycardia",
+      "type": "compound",
+      "conditions": [
+        { "field": "temperature", "operator": ">=", "value": 38.5 },
+        { "field": "heart_rate", "operator": ">", "value": 100 }
+      ],
+      "logic": "AND",
+      "alert": "SEPSIS_RISK",
+      "severity": "CRITICAL",
+      "description": "Fever combined with tachycardia — possible sepsis indicator"
+    }
+  ]
+}
