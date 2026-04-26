@@ -3,9 +3,29 @@ const rules = require("./rules.json");
 const { API_BASE_URL } = require("./config/config.js");
 const { log } = require("./utils/logger");
 
+let authToken = "";
+
+const setAuthToken = (token) => {
+  authToken = token;
+};
+
+const authHeaders = () =>
+  authToken
+    ? {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    : {};
+
 // validate incoming data
 const validateData = (data) => {
-  if (!data.heartRate || !data.temperature || !data.spo2) {
+  if (
+    data.heartRate === undefined ||
+    data.temperature === undefined ||
+    data.spo2 === undefined ||
+    !data.bloodPressure
+  ) {
     throw new Error("Missing vital fields");
   }
 
@@ -60,22 +80,10 @@ const checkRules = (data) => {
 // send data to backend
 const sendVitals = async (data) => {
   try {
-    await axios.post(`${API_BASE_URL}/vitals`, data);
-    log("INFO", "Vitals sent", data);
+    await axios.post(`${API_BASE_URL}/vitals`, data, authHeaders());
+    log("INFO", `Vitals sent for ${data.patientId}`);
   } catch (err) {
-    log("ERROR", "Failed to send vitals", err.message);
-  }
-};
-
-// send alerts
-const sendAlerts = async (alerts) => {
-  for (let alert of alerts) {
-    try {
-      await axios.post(`${API_BASE_URL}/alerts`, alert);
-      log("ALERT", "Alert sent", alert);
-    } catch (err) {
-      log("ERROR", "Failed to send alert", err.message);
-    }
+    log("ERROR", "Failed to send vitals", err.response?.data?.message || err.message);
   }
 };
 
@@ -89,11 +97,12 @@ const processData = async (data) => {
     await sendVitals(data);
 
     if (alerts.length > 0) {
-      await sendAlerts(alerts);
+      // Alerts are persisted and emitted by backend rule engine.
+      log("ALERT", `Rule matches for ${data.patientId}`, alerts);
     }
   } catch (err) {
     log("ERROR", "Processing failed", err.message);
   }
 };
 
-module.exports = { processData };
+module.exports = { processData, setAuthToken };
