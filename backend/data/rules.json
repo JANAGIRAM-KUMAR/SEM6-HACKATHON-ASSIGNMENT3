@@ -1,0 +1,34 @@
+[
+  {
+    "field": "heartRate",
+    "operator": ">",
+    "value": 110,
+    "alert": "HIGH_HEART_RATE",
+    "severity": "HIGH",
+    "message": "Heart rate is above normal threshold."
+  },
+  {
+    "field": "heartRate",
+    "operator": "<",
+    "value": 50,
+    "alert": "LOW_HEART_RATE",
+    "severity": "MEDIUM",
+    "message": "Heart rate is below normal threshold."
+  },
+  {
+    "field": "spo2",
+    "operator": "<",
+    "value": 92,
+    "alert": "LOW_SPO2",
+    "severity": "HIGH",
+    "message": "SpO2 is below safe oxygen saturation level."
+  },
+  {
+    "field": "temperature",
+    "operator": ">=",
+    "value": 38,
+    "alert": "FEVER",
+    "severity": "MEDIUM",
+    "message": "Body temperature indicates potential fever."
+  }
+]

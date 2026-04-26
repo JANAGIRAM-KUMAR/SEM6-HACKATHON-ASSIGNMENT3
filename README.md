@@ -381,3 +381,76 @@ backend/ │── models/ │── routes/ │── controllers/ │�
 
 Build this as a production-ready but simple backend suitable for a student project/demo.
   
+## Backend Implementation (Completed)
+
+The backend implementation is available under `backend/` and includes:
+
+- Node.js + Express API with modular architecture
+- MongoDB + Mongoose models (`Patient`, `Vitals`, `Alert`, `User`)
+- JWT authentication (`/api/auth/register`, `/api/auth/login`)
+- Joi validation, Helmet, rate limiting, centralized error handling
+- Morgan request logging + Winston structured logging
+- DSL rule engine using `backend/data/rules.json`
+- Real-time events with Socket.io:
+  - `vitals:new`
+  - `alerts:new`
+- Pagination and date-range filtering for vitals and alerts
+- Sensitive patient `name` encryption-at-rest simulation
+- Mock high-frequency IoT simulator script (`npm run simulate`)
+
+### Backend Folder Structure
+
+backend/
+│── config/
+│── controllers/
+│── data/
+│── middleware/
+│── models/
+│── routes/
+│── scripts/
+│── services/
+│── utils/
+│── server.js
+
+### Environment Setup
+
+1. Navigate to backend:
+   - `cd backend`
+2. Create environment file:
+   - `cp .env.example .env`
+3. Update `.env` values as needed (especially `MONGO_URI`, `JWT_SECRET`, `ENCRYPTION_KEY`).
+
+### Run Instructions
+
+1. Install dependencies:
+   - `npm install`
+2. Start development server:
+   - `npm run dev`
+3. (Optional) Start mock IoT simulator:
+   - `npm run simulate`
+
+### Sample API Calls
+
+1. Register user:
+   - `POST /api/auth/register`
+2. Login user:
+   - `POST /api/auth/login`
+3. Create patient:
+   - `POST /api/patients` (Bearer token required)
+4. Submit vitals:
+   - `POST /api/vitals` (Bearer token required)
+5. Fetch patient vitals history with filters:
+   - `GET /api/vitals/:patientId?page=1&limit=30&startDate=2026-01-01T00:00:00.000Z&endDate=2026-12-31T23:59:59.999Z`
+6. Fetch alerts:
+   - `GET /api/alerts?page=1&limit=30`
+   - `GET /api/alerts/:patientId?page=1&limit=30`
+
+### Notes
+
+- Rules are configurable in `backend/data/rules.json`.
+- The vitals ingestion flow is:
+  1. validate payload
+  2. store vitals
+  3. evaluate rules
+  4. store alerts
+  5. emit Socket.io events
