@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Inter", "SF Pro Display", "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at top right, rgba(40, 80, 120, 0.45), transparent 38%),
+    radial-gradient(circle at bottom left, rgba(8, 155, 120, 0.35), transparent 35%),
+    #030816;
+  color: #e2e8f0;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.glass {
+  background: linear-gradient(145deg, rgba(15, 23, 42, 0.62), rgba(15, 23, 42, 0.4));
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  box-shadow: 0 12px 40px rgba(2, 6, 23, 0.45);
+  backdrop-filter: blur(14px);
+}
+
+.critical-blink {
+  animation: criticalBlink 1s ease-in-out infinite;
+}
+
+@keyframes criticalBlink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.38;
+  }
+}
+
+.thin-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(51, 65, 85, 0.8) transparent;
+}
