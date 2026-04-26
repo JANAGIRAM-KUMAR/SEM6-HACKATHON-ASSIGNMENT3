@@ -1,0 +1,23 @@
+[
+  {
+    "field": "heartRate",
+    "operator": ">",
+    "value": 110,
+    "alert": "HIGH_HEART_RATE",
+    "severity": "HIGH"
+  },
+  {
+    "field": "spo2",
+    "operator": "<",
+    "value": 92,
+    "alert": "LOW_OXYGEN",
+    "severity": "HIGH"
+  },
+  {
+    "field": "temperature",
+    "operator": ">",
+    "value": 38,
+    "alert": "FEVER",
+    "severity": "MEDIUM"
+  }
+]
