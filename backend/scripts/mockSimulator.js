@@ -4,7 +4,7 @@ const dotenv = require("dotenv");
 
 dotenv.config({ path: path.join(__dirname, "../.env") });
 
-const BASE_URL = process.env.SIMULATOR_BASE_URL || "http://localhost:5000";
+const BASE_URL = process.env.SIMULATOR_BASE_URL || "http://localhost:5005";
 const SIMULATOR_EMAIL = process.env.SIMULATOR_EMAIL || "simulator.admin@example.com";
 const SIMULATOR_PASSWORD = process.env.SIMULATOR_PASSWORD || "Passw0rd!";
 

@@ -8,7 +8,6 @@ const connectDatabase = require("./config/database");
 const { initSocket } = require("./config/socket");
 
 const requestLogger = require("./middleware/requestLogger");
-const rateLimiter = require("./middleware/rateLimiter");
 const notFound = require("./middleware/notFound");
 const errorHandler = require("./middleware/errorHandler");
 
@@ -21,7 +20,6 @@ app.use(helmet());
 app.use(cors({ origin: config.corsOrigin }));
 app.use(express.json({ limit: "1mb" }));
 app.use(requestLogger);
-app.use(rateLimiter);
 
 app.get("/health", (_req, res) => {
   res.status(200).json({
