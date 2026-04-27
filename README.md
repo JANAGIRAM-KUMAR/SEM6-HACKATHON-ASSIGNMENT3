@@ -1,456 +1,159 @@
-### Prompt for Fuzayl Ameen
-
-You are an IoT systems engineer. Build a data simulation and edge-processing module for an IoT-based Patient Health Monitoring System.
-
-🎯 Goal
-Simulate realistic patient vital data (without real sensors), process it at the “edge” level, detect abnormal conditions in real-time, and send structured data + alerts to a backend API.
-
-🧱 Tech Stack
-* Node.js (preferred) OR Python
-* Axios / Requests (HTTP communication)
-* MQTT (optional, if implementing IoT protocol)
-* dotenv for configuration
-
-📡 Core Requirements
-1. Patient Data Simulation
-Simulate vitals for multiple patients (at least 5–10):
-Parameters:
-* heartRate (60–120 bpm)
-* temperature (36–39 °C)
-* spo2 (85–100 %)
-* bloodPressure (e.g., "120/80")
-
-2. Realistic Data Patterns (IMPORTANT)
-Do NOT generate purely random values.
-Include:
-* Day/Night variation (lower heart rate at night)
-* Gradual changes instead of sudden jumps
-* Occasional abnormal spikes (simulate emergencies)
-* Patient-specific baseline differences
-Example:
-* Patient A → naturally higher heart rate
-* Patient B → occasional low SpO2
-
-3. Edge Processing Logic (Local Intelligence)
-Before sending data to backend:
-* Validate incoming data
-* Apply rule-based checks locally
-Example rules:
-* IF heartRate > 110 → HIGH_HEART_RATE alert
-* IF spo2 < 92 → LOW_OXYGEN alert
-* IF temperature > 38 → FEVER alert
-
-4. DSL-Based Rule Engine (Edge Level)
-Support rules defined in JSON format:
-Example: { "field": "heartRate", "operator": ">", "value": 110, "alert": "HIGH_HEART_RATE", "severity": "HIGH" }
-Requirements:
-* Parse rule dynamically
-* Apply rules to each data point
-* Allow multiple rules
-
-5. Alert Generation
-When a rule is triggered:
-* Create alert object:
-    * patientId
-    * alertType
-    * severity
-    * message
-    * timestamp
-* Send alert immediately to backend
-
-6. Data Transmission
-Send data every 1–2 seconds per patient:
-Endpoints:
-* POST /api/vitals
-* POST /api/alerts
-Payload Example: { "patientId": "P1", "heartRate": 95, "temperature": 37.2, "spo2": 97, "bloodPressure": "120/80", "timestamp": "ISO format" }
-
-7. Multi-Patient Simulation
-* Simulate at least 5 patients simultaneously
-* Use asynchronous loops / intervals
-* Each patient should have unique behavior
-
-8. Fault & Edge Cases
-Simulate:
-* Missing data fields
-* Sensor noise
-* Sudden extreme values
-
-9. Logging
-* Log generated data
-* Log alerts
-* Log errors
-
-10. Project Structure
-iot-simulator/ │── simulator.js │── edgeProcessor.js │── rules.json │── config/ │── utils/ │── .env
-
-📦 Output Requirements
-* Complete working code
-* Modular structure (separate simulation and edge logic)
-* Comments explaining logic
-* Sample rules.json file
-* Instructions to run the simulator
-
-Build this as a realistic IoT simulation system suitable for a demo/hackathon project.
-
-### Prompt for Jai Harish
-
-You are a senior frontend engineer. Build a modern, responsive Patient Health Monitoring Dashboard using React.js and Tailwind CSS.
-
-🎯 Goal
-Create a real-time dashboard UI for an IoT-based healthcare system that displays patient vitals, alerts, and analytics using simulated data from a backend API.
-
-🧱 Tech Stack
-* React.js (Vite preferred)
-* Tailwind CSS
-* Axios (API calls)
-* Socket.io-client (real-time updates)
-* Recharts (charts & graphs)
-* React Router (optional)
-
-📊 Core Features
-1. Dashboard Layout
-* Clean medical UI (like hospital dashboards)
-* Sidebar (Patients list)
-* Main panel (Vitals + Charts)
-* Top bar (App name + user info)
-
-2. Patient List (Sidebar)
-* Show list of patients
-* Click to select patient
-* Highlight active patient
-
-3. Vitals Cards (Top Section)
-Display:
-* ❤️ Heart Rate
-* 🌡 Temperature
-* 🫁 SpO2
-* 🩸 Blood Pressure
-Each card should:
-* Show current value
-* Color indicators:
-    * Green → Normal
-    * Yellow → Warning
-    * Red → Critical
-
-4. Real-Time Updates
-* Connect to backend using Socket.io
-* Update vitals instantly when new data arrives
-
-5. Charts Section
-Use Recharts:
-* Line chart for heart rate (last 30 records)
-* Line chart for temperature
-* Area chart for SpO2
-
-6. Alerts Panel 🚨
-* Show list of triggered alerts
-* Include:
-    * Alert type
-    * Severity (color-coded)
-    * Timestamp
-
-7. API Integration
-Backend endpoints:
-* GET /api/patients
-* GET /api/vitals/:patientId
-* GET /api/alerts/:patientId
-
-8. State Management
-* Use React hooks (useState, useEffect)
-* Optional: Context API for global state
-
-9. Folder Structure
-src/ │── components/ │ ├── Sidebar.jsx │ ├── VitalsCard.jsx │ ├── Charts.jsx │ ├── Alerts.jsx │── pages/ │ ├── Dashboard.jsx │── services/ │ ├── api.js │── App.jsx │── main.jsx
-
-10. Styling Requirements
-* Use Tailwind CSS
-* Modern card UI
-* Soft shadows, rounded corners
-* Responsive design (mobile + desktop)
-
-11. Extra Features (Optional)
-* Dark mode toggle 🌙
-* Search patient
-* Filter alerts
-* Loading skeletons
-
-📦 Output Requirements
-* Full working React code
-* Tailwind setup instructions
-* Example API integration
-* Socket.io connection setup
-* Clean, reusable components
-
-Build a clean, production-like UI suitable for a hackathon/demo project.
-
-### Prompt for Gokul Harish
-
-You are a senior Data Engineer + Security Engineer. Build a module for an IoT-based Patient Health Monitoring System that performs Exploratory Data Analysis (EDA), DSL-based rule management, basic HIPAA-like security simulation, and automated report generation.
-
-🎯 Goal
-Analyze patient vitals data, extract meaningful insights, dynamically manage alert rules using a DSL, ensure secure handling of sensitive data, and generate structured reports for doctors/admins.
-
-🧱 Tech Stack
-* Python (Pandas, NumPy, Matplotlib / Seaborn)
-* FastAPI or Flask (optional for APIs)
-* JSON (for DSL rules)
-* JWT (for security simulation)
-* Cryptography / hashlib (basic encryption)
-* Report generation: PDF (reportlab) or DOCX (python-docx)
-
-📊 1. Exploratory Data Analysis (EDA)
-Input:
-* Patient vitals dataset (JSON/CSV from backend)
-Tasks:
-* Clean and preprocess data
-* Handle missing values
-* Convert timestamps
-Analysis:
-* Average heart rate per patient
-* Max/min temperature
-* SpO2 trends
-* Alert frequency per patient
-* Time-based trends (hourly/daily)
-Visualization:
-* Line charts (heart rate over time)
-* Bar charts (alerts per patient)
-* Heatmaps (optional)
-Output:
-* Graphs
-* Summary insights like:
-    * "Patient P2 shows frequent low SpO2 during night hours"
-
-🧠 2. DSL (Domain-Specific Language) for Rules
-Goal:
-Allow dynamic creation and evaluation of alert rules.
-Rule Format (JSON):
-{ "field": "spo2", "operator": "<", "value": 92, "alert": "LOW_OXYGEN", "severity": "HIGH" }
-Requirements:
-* Parse rules dynamically
-* Support operators: >, <, >=, <=, ==
-* Apply rules to dataset
-* Allow multiple rules
-* Store rules in rules.json
-Bonus:
-* Support compound rules: "heartRate > 110 AND spo2 < 92"
-
-🔐 3. Security (HIPAA-like Simulation)
-Implement:
-Authentication
-* JWT-based login system
-* Roles: Admin, Doctor
-Data Protection
-* Mask sensitive data (e.g., patient name → P***)
-* Encrypt stored sensitive fields (basic level)
-API Security (if API used)
-* Token validation middleware
-* Rate limiting (basic)
-Logging
-* Track access to patient data
-* Log unauthorized attempts
-
-📄 4. Report Generation
-Generate Reports for:
-* Individual patient
-* Overall system
-Report Contents:
-* Patient details
-* Vitals summary
-* Graphs (EDA)
-* Alerts summary
-* Risk level (LOW / MEDIUM / HIGH)
-Format:
-* PDF or DOCX
-Example Sections:
-1. Patient Overview
-2. Vitals Trends
-3. Alert History
-4. Risk Assessment
-5. Recommendations
-
-⚙️ 5. Integration
-* Fetch data from backend API OR use sample dataset
-* Allow exporting reports via API or file download
-* Ensure compatibility with frontend dashboard
-
-📁 Project Structure
-eda-module/ │── analysis.py │── rules_engine.py │── security.py │── report_generator.py │── rules.json │── data/ │── outputs/
-
-📦 Output Requirements
-* Fully working Python code
-* Sample dataset
-* Sample rules.json
-* Generated graphs
-* At least one sample report file
-* Clear comments and documentation
-
-Build this as a modular, clean, and demo-ready system suitable for a student project with real-world relevance.
-
-
-### Prompt for Janagiram
-
-You are a senior backend engineer. Build a scalable backend system for an IoT-based Patient Health Monitoring Application using Node.js (Express).
-🎯 Goal
-Develop a backend that receives simulated IoT patient vitals, processes them in real-time, applies rule-based alerts (DSL), and serves data to a React dashboard.
-
-🧱 Core Requirements
-1. Tech Stack
-* Node.js + Express
-* MongoDB (Mongoose)
-* Socket.io (for real-time updates)
-* JWT Authentication
-* dotenv for environment config
-
-2. Data Model (MongoDB Schemas)
-Patient Schema
-* patientId (String, unique)
-* name
-* age
-* gender
-* bloodGroup
-Vitals Schema
-* patientId (ref)
-* heartRate (Number)
-* temperature (Number)
-* spo2 (Number)
-* bloodPressure (String)
-* timestamp (Date)
-Alerts Schema
-* patientId
-* alertType (HIGH_HEART_RATE, LOW_SPO2, etc.)
-* message
-* severity (LOW, MEDIUM, HIGH)
-* timestamp
-
-3. API Endpoints
-Vitals
-* POST /api/vitals → receive simulated IoT data
-* GET /api/vitals/:patientId → fetch patient vitals history
-Patients
-* POST /api/patients → create patient
-* GET /api/patients → list patients
-Alerts
-* GET /api/alerts → get all alerts
-* GET /api/alerts/:patientId → alerts per patient
-
-4. Real-Time System
-* Use Socket.io
-* Emit new vitals data to frontend
-* Emit alerts instantly when triggered
-
-5. Rule Engine (DSL Support)
-Implement a simple DSL parser for rules like: "IF heartRate > 110 THEN alert = HIGH_HEART_RATE"
-Requirements:
-* Store rules in JSON
-* Evaluate rules on every incoming vitals record
-* Trigger alerts dynamically
-Example Rule: { "field": "heartRate", "operator": ">", "value": 110, "alert": "HIGH_HEART_RATE", "severity": "HIGH" }
-
-6. Edge Processing Logic
-When new vitals arrive:
-1. Validate data
-2. Store in DB
-3. Run rule engine
-4. Generate alerts if conditions match
-5. Emit via WebSocket
-
-7. Fake Data Support
-Ensure backend supports high-frequency incoming data (every 1–2 seconds per patient).
-
-8. Security (HIPAA-like Simulation)
-* JWT authentication middleware
-* Input validation (Joi or express-validator)
-* Basic encryption for sensitive data
-* Rate limiting
-
-9. Project Structure
-backend/ │── models/ │── routes/ │── controllers/ │── services/ │── middleware/ │── utils/ │── config/ │── server.js
-
-10. Extra Features (Optional but recommended)
-* Pagination for vitals history
-* Filtering by date range
-* Logging (Winston or Morgan)
-* Error handling middleware
-
-📦 Output Requirements
-* Provide complete working code
-* Include comments for understanding
-* Include sample .env file
-* Include instructions to run the server
-
-Build this as a production-ready but simple backend suitable for a student project/demo.
-  
-## Backend Implementation (Completed)
-
-The backend implementation is available under `backend/` and includes:
-
-- Node.js + Express API with modular architecture
-- MongoDB + Mongoose models (`Patient`, `Vitals`, `Alert`, `User`)
-- JWT authentication (`/api/auth/register`, `/api/auth/login`)
-- Joi validation, Helmet, rate limiting, centralized error handling
-- Morgan request logging + Winston structured logging
-- DSL rule engine using `backend/data/rules.json`
-- Real-time events with Socket.io:
-  - `vitals:new`
-  - `alerts:new`
-- Pagination and date-range filtering for vitals and alerts
-- Sensitive patient `name` encryption-at-rest simulation
-- Mock high-frequency IoT simulator script (`npm run simulate`)
-
-### Backend Folder Structure
-
-backend/
-│── config/
-│── controllers/
-│── data/
-│── middleware/
-│── models/
-│── routes/
-│── scripts/
-│── services/
-│── utils/
-│── server.js
-
-### Environment Setup
-
-1. Navigate to backend:
-   - `cd backend`
-2. Create environment file:
-   - `cp .env.example .env`
-3. Update `.env` values as needed (especially `MONGO_URI`, `JWT_SECRET`, `ENCRYPTION_KEY`).
-
-### Run Instructions
-
-1. Install dependencies:
-   - `npm install`
-2. Start development server:
-   - `npm run dev`
-3. (Optional) Start mock IoT simulator:
-   - `npm run simulate`
-
-### Sample API Calls
-
-1. Register user:
-   - `POST /api/auth/register`
-2. Login user:
-   - `POST /api/auth/login`
-3. Create patient:
-   - `POST /api/patients` (Bearer token required)
-4. Submit vitals:
-   - `POST /api/vitals` (Bearer token required)
-5. Fetch patient vitals history with filters:
-   - `GET /api/vitals/:patientId?page=1&limit=30&startDate=2026-01-01T00:00:00.000Z&endDate=2026-12-31T23:59:59.999Z`
-6. Fetch alerts:
-   - `GET /api/alerts?page=1&limit=30`
-   - `GET /api/alerts/:patientId?page=1&limit=30`
-
-### Notes
-
-- Rules are configurable in `backend/data/rules.json`.
-- The vitals ingestion flow is:
-  1. validate payload
-  2. store vitals
-  3. evaluate rules
-  4. store alerts
-  5. emit Socket.io events
+# IoT-Based Patient Health Monitoring System - Detailed WBS
+
+## Project Overview
+This document serves as the master Work Breakdown Structure (WBS) for the IoT-Based Patient Health Monitoring System. It provides a granular roadmap for development, covering the IoT simulation, edge processing, rule-based alerting, and clinical visualization.
+
+---
+
+## Comprehensive Work Breakdown Structure (WBS)
+
+### Phase 1: Project Management & Architecture Design
+*   **1.1 System Architecture Blueprinting**
+    *   1.1.1 Define Micro-service Boundaries: Decouple IoT Simulator, Backend API, and Frontend.
+    *   1.1.2 WebSocket Strategy: Design room-based broadcasting (Room per Patient/Ward).
+    *   1.1.3 PHI Data Modeling: Design Mongoose schemas for Patients, Vitals (Time-series), and Alerts.
+    *   1.1.4 API Contract Definition: Document REST endpoints via Swagger/OpenAPI.
+*   **1.2 Technical Governance & DevOps Setup**
+    *   1.2.1 Environment Configuration: Setup `.env` templates for all three tiers.
+    *   1.2.2 Monorepo/Multi-repo Structure: Define directory standards and cross-service types.
+    *   1.2.3 CI/CD Pipeline: Configure automated linting and unit test runners.
+
+### Phase 2: IoT Simulation & Edge Intelligence
+*   **2.1 Advanced Physiological Data Engine**
+    *   2.1.1 Heart Rate (HR) Logic: Implement sine-wave base with random "noise" and circadian drift.
+    *   2.1.2 SpO2 & Respiratory Model: Correlate SpO2 drops with HR spikes for realism.
+    *   2.1.3 Body Temp Simulation: Slow-moving fluctuations with fever-state triggers.
+    *   2.1.4 Anomaly Injection API: Create endpoints to manually trigger "Crisis Events" (e.g., Cardiac Arrest).
+*   **2.2 Edge Intelligence & Local Processing**
+    *   2.2.1 Data Normalization: Map raw sensor values to standard medical units.
+    *   2.2.2 Local Threshold Filtering: Implement "Silent Mode" for normal readings to save bandwidth.
+    *   2.2.3 Edge Persistence: Local `db.json` logging for offline-resilience simulation.
+    *   2.2.4 Message Batching: Optimize Edge-to-Cloud HTTP/MQTT payloads.
+
+### Phase 3: Scalable Backend Infrastructure
+*   **3.1 Core Backend Services**
+    *   3.1.1 Vitals Ingestion Controller: High-frequency POST endpoint with validation.
+    *   3.1.2 Historical Data Aggregator: MongoDB queries for 24h/7d trend views.
+    *   3.1.3 Patient Registry: CRUD operations with encrypted PII fields.
+*   **3.2 DSL Rule Engine (The "Brain")**
+    *   3.2.1 Rule Parser: Logic to read `rules.json` and convert to executable JS conditions.
+    *   3.2.2 Threshold Evaluator: Compare incoming vitals against JSON-defined Min/Max/Avg.
+    *   3.2.3 Correlation Logic: Support complex rules (e.g., `IF HR > 120 AND SpO2 < 90 FOR 30s THEN ALERT`).
+    *   3.2.4 Notification Dispatcher: Trigger database Alert records and Socket.io events simultaneously.
+*   **3.3 Real-time Socket Server**
+    *   3.3.1 Connection Manager: Handle Auth handshake and heartbeat.
+    *   3.3.2 Selective Broadcasting: Emit vitals only to subscribed medical staff "rooms".
+
+### Phase 4: Clinical Dashboard Development
+*   **4.1 UI/UX Infrastructure**
+    *   4.1.1 Medical Design System: Implement high-contrast, accessibility-compliant components.
+    *   4.1.2 Dashboard Grid: Draggable/Resizable vitals cards for custom layouts.
+    *   4.1.3 Navigation: Role-based sidebars (Admin vs. Clinician).
+*   **4.2 Real-time Visualizations**
+    *   4.2.1 Waveform Implementation: Smooth Recharts/Canvas rendering for ECG-like HR data.
+    *   4.2.2 Status Indicators: Color-coded vitals (Green: Normal, Yellow: Warning, Red: Critical).
+    *   4.2.3 Alert Panel: Infinite-scroll alert history with "Acknowledge" functionality.
+*   **4.3 Frontend State Logic**
+    *   4.3.1 Real-time Hook (`useVitals`): Abstract Socket.io logic into a reusable React hook.
+    *   4.3.2 Global Store: Manage current active patient and system-wide alert counts.
+
+### Phase 5: Security, Compliance & Data Privacy
+*   **5.1 Authentication & Authorization**
+    *   5.1.1 Secure Login: Argon2/Bcrypt hashing with JWT issuance.
+    *   5.1.2 Refresh Token Logic: Implement secure rotation to prevent session hijacking.
+    *   5.1.3 RBAC Middleware: Protect sensitive clinical routes from unauthorized users.
+*   **5.2 HIPAA-Inspired Data Protection**
+    *   5.2.1 Field-Level Encryption: Encrypt Patient Names/SSNs using AES-256 before DB write.
+    *   5.2.2 Secure Transport: Enforce TLS for all traffic and use Helmet.js for header security.
+    *   5.2.3 Rate Limiting: Prevent DDoS/Brute-force on IoT and Auth endpoints.
+*   **5.3 Audit & Traceability**
+    *   5.3.1 Clinical Logs: Record every time a user views a patient's historical data.
+    *   5.3.2 System Health Monitoring: Winston/Morgan logging for error tracking.
+
+### Phase 6: QA, Testing & Validation
+*   **6.1 Technical Validation**
+    *   6.1.1 IoT Load Testing: Script to simulate 500 concurrent patients posting vitals.
+    *   6.1.2 Rule Engine Unit Tests: Verify 100% of DSL conditions trigger correctly.
+    *   6.1.3 Socket Latency Profiling: Measure time from Edge-Trigger to Dashboard-Render.
+*   **6.2 User Acceptance & Deployment**
+    *   6.2.1 Clinical Flow Testing: End-to-end walkthrough from "Vitals Drop" to "Nurse Alert".
+    *   6.2.2 Documentation: Finalize README, API Docs, and Deployment Guide.
+
+---
+
+## Earned Value Management (EVM) Framework
+
+To ensure the project remains on track financially and chronologically, we utilize Earned Value Analysis (EVA). This provides a "Current State" snapshot of performance.
+
+### 1. Budget Allocation (BAC - Budget at Completion)
+*Total Project Budget: $100,000 (Allocated across 12 weeks)*
+
+| Phase | Weightage | Budgeted Cost (PV) |
+| :--- | :--- | :--- |
+| **P1: Design & Arch** | 10% | $10,000 |
+| **P2: IoT & Edge** | 20% | $20,000 |
+| **P3: Backend & DSL** | 25% | $25,000 |
+| **P4: Frontend & Viz** | 20% | $20,000 |
+| **P5: Security & PHI** | 15% | $15,000 |
+| **P6: QA & Deployment** | 10% | $10,000 |
+
+### 2. Key Performance Indicators (KPIs)
+*   **Planned Value (PV):** The budgeted cost of work scheduled to be completed by today.
+*   **Earned Value (EV):** The budgeted cost of the work *actually* completed.
+*   **Actual Cost (AC):** The actual money spent on the work completed.
+*   **Schedule Variance (SV = EV - PV):** Positive means ahead of schedule.
+*   **Cost Variance (CV = EV - AC):** Positive means under budget.
+*   **Efficiency Indices:**
+    *   **SPI (EV / PV):** Schedule Performance Index (> 1.0 is good).
+    *   **CPI (EV / AC):** Cost Performance Index (> 1.0 is good).
+
+### 3. Project Status Tracking Dashboard (Example: Week 4)
+| Metric | Value | Interpretation |
+| :--- | :--- | :--- |
+| **PV (Planned)** | $30,000 | Expected to finish P1 & P2 by Week 4. |
+| **EV (Earned)** | $28,000 | P1 is 100% done, P2 is 90% done. |
+| **AC (Actual)** | $31,500 | Slightly higher spend on IoT sensor licensing. |
+| **SV / SPI** | -$2,000 / 0.93 | **Behind Schedule:** Needs 7% more velocity. |
+| **CV / CPI** | -$3,500 / 0.89 | **Over Budget:** Spending $1.12 to earn $1.00. |
+
+---
+
+## Technical Stack Summary
+- **Runtime:** Node.js (v18+)
+- **Backend:** Express, MongoDB (Atlas), Socket.io
+- **Frontend:** React 18, Vite, Recharts, CSS Modules
+- **IoT/Edge:** Node.js, Lowdb (JSON Storage)
+- **Security:** JWT, CryptoJS, Bcrypt, Express-Rate-Limit
+
+## Project Structure
+```text
+├── backend/                # Scalable Backend Infrastructure
+│   ├── config/             # Database, Socket.io, & Env configurations
+│   ├── controllers/        # Express controllers (Auth, Patient, Vitals, Alerts)
+│   ├── data/               # DSL-based rules definition (rules.json)
+│   ├── middleware/         # Security, Auth, Logging, & Validation middlewares
+│   ├── models/             # Mongoose Schemas (User, Patient, Vitals, Alert)
+│   ├── routes/             # RESTful API route definitions
+│   ├── services/           # Business logic (Rule Engine, Vitals processing)
+│   ├── utils/              # Encryption, Logger, & Error handling utilities
+│   └── server.js           # Entry point for Express & Socket.io server
+├── frontend/               # Clinical Dashboard (React)
+│   ├── src/
+│   │   ├── components/     # Medical UI components (Charts, Grids, Panels)
+│   │   ├── hooks/          # Custom hooks (useRealtimeMonitor)
+│   │   ├── pages/          # Dashboard, Login, & Registration pages
+│   │   ├── services/       # API & Socket.io client integrations
+│   │   ├── store/          # State management (Auth & Monitoring stores)
+│   │   ├── utils/          # Medical calculation & Formatting utilities
+│   │   ├── App.jsx         # Root application component
+│   │   └── main.jsx        # React entry point
+│   └── vite.config.js      # Build & Dev server configuration
+├── iot-simulator/          # IoT & Edge Simulation Layer
+│   ├── config/             # Simulator specific settings
+│   ├── utils/              # Simulator logging & formatting
+│   ├── db.json             # Edge-level local data storage
+│   ├── edgeProcessor.js    # Local data filtering & anomaly detection
+│   ├── rules.json          # Edge-side threshold definitions
+│   └── simulator.js        # Vitals generation engine (HR, SpO2, Temp)
+└── README.md               # Master WBS & System Architecture
+```
